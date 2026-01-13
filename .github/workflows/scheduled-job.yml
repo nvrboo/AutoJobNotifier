@@ -2,8 +2,8 @@ name: daily-job
 
 on:
   schedule:
-    - cron: "0 8 * * *" # daily 08:00 UTC (3:00 AM ET in winter)
-  workflow_dispatch:
+    - cron: "0 13 * * *" # daily 13:00 UTC (8:00 AM ET in winter)
+  workflow_dispatch: {}
 
 jobs:
   run:
@@ -12,15 +12,13 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-          cache: "pip"
 
       - name: Install deps
-        run: |
-          pip install -r requirements.txt
+        run: pip install -r requirements.txt
 
       - name: Run job
         env:
