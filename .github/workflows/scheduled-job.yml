@@ -1,0 +1,36 @@
+name: daily-job
+
+on:
+  schedule:
+    - cron: "0 8 * * *" # daily 08:00 UTC (3:00 AM ET in winter)
+  workflow_dispatch: {}
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install deps
+        run: pip install -r requirements.txt
+
+      - name: Run job
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          TOP_JOBS_WEBHOOK_URL: ${{ secrets.TOP_JOBS_WEBHOOK_URL }}
+          JOBS_WEBHOOK_URL: ${{ secrets.JOBS_WEBHOOK_URL }}
+          LOW_SCORE_JOBS_WEBHOOK_URL: ${{ secrets.LOW_SCORE_JOBS_WEBHOOK_URL }}
+          APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
+          HASDATA_API_KEY: ${{ secrets.HASDATA_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          PERSON_INFO: ${{ secrets.PERSON_INFO }}
+          PERSON_EXPERIENCE: ${{ secrets.PERSON_EXPERIENCE }}
+          PERSON_SKILLS: ${{ secrets.PERSON_SKILLS }}
+          LOCATION: ${{ secrets.LOCATION }}
+        run: python main.py
