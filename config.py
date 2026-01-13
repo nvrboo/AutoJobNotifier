@@ -3,7 +3,9 @@ import os
 
 from dotenv import load_dotenv
 
+print(1)
 load_dotenv()
+print(2)
 
 def get_env(key, value_type=None):
     print(f'Loading {key} environment variables')
@@ -12,7 +14,7 @@ def get_env(key, value_type=None):
         raise RuntimeError(f"Missing env var: {key}")
 
     if value_type in [list, dict]:
-        raw = value.strip()   # key change
+        raw = value.strip()
         if not raw:
             raise RuntimeError(f"{key} is empty/whitespace (len={len(value)})")
         try:
@@ -27,6 +29,7 @@ def get_env(key, value_type=None):
 
 
 DATABASE_URL = get_env("DATABASE_URL")
+print(3)
 
 database_fields = [
             'id SERIAL PRIMARY KEY',
