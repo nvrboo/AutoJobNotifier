@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 def get_env(key, value_type=None):
+    print(f'Loading {key} environment variables')
     value = os.environ.get(key)
     if value is None:
         raise RuntimeError(f"Missing env var: {key}")
