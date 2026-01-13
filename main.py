@@ -4,11 +4,11 @@ import psycopg2
 from psycopg2.extras import RealDictCursor
 import datetime
 
+import config
 from database_api import DatabaseAPI
 from job_listing_api import JobListingAPI
 from webhook_sender import WebhookSender
 from ai_tool import AITool
-import config
 
 DatabaseAPI.init_db()
 DatabaseAPI.ensure_schema()
