@@ -3,9 +3,7 @@ import os
 
 from dotenv import load_dotenv
 
-print(1)
 load_dotenv()
-print(2)
 
 def get_env(key, value_type=None):
     print(f'Loading {key} environment variables')
@@ -24,19 +22,20 @@ def get_env(key, value_type=None):
             raise RuntimeError(
                 f"{key} invalid JSON. len={len(value)} first_char={ord(raw[0])} first_char_repr={repr(raw[0])}"
             ) from e
+    if value_type == int:
+        return int(value)
     return value
 
 
 
 DATABASE_URL = get_env("DATABASE_URL")
-print(3)
 
 database_fields = [
             'id SERIAL PRIMARY KEY',
             'url TEXT',
             'apply_url TEXT',
             'job_title TEXT',
-            'original_search_titles JSON',
+            'search_titles JSON',
             'company TEXT',
             'location TEXT',
             'description TEXT',
@@ -52,40 +51,46 @@ jobs_webhook_url = get_env("JOBS_WEBHOOK_URL")
 low_score_jobs_webhook_url = get_env("LOW_SCORE_JOBS_WEBHOOK_URL")
 
 APIFY_TOKEN = get_env("APIFY_TOKEN")
-HASDATA_API_KEY = get_env("HASDATA_API_KEY")
 OPENAI_API_KEY = get_env("OPENAI_API_KEY")
+
+LOCATION = get_env("LOCATION")
+LINKEDIN_GEOID = get_env("LINKEDIN_GEOID", int)
+RADIUS = get_env("RADIUS", int)
 
 job_titles = [
     # Pure help desk/support
-    "IT Support Specialist",
-    "Help Desk Technician",
-    "Technical Support Specialist",
-    "IT Assistant",
-    "Application Support Analyst",
-    "Desktop Support Technician",
-    "Network Technician",
-    "End User Support Technician"
+    {"title": "IT Support Specialist", "remote": False},
+    {"title": "Help Desk Technician", "remote": False},
+    {"title": "Technical Support Specialist", "remote": False},
+    {"title": "IT Assistant", "remote": False},
+    {"title": "Application Support Analyst", "remote": False},
+    {"title": "Desktop Support Technician", "remote": False},
+    {"title": "Network Technician", "remote": False},
+    {"title": "End User Support Technician", "remote": False},
 
     # Dev/Programming
-    "Junior Software Developer",
-    "Junior Web Developer",
-    "Entry-Level Programmer",
-    "Python Software Developer",
+    {"title": "Junior Software Developer", "remote": False},
+    {"title": "Junior Software Developer", "remote": True},
+    {"title": "Junior Web Developer", "remote": False},
+    {"title": "Junior Web Developer", "remote": True},
+    {"title": "Entry-Level Programmer", "remote": False},
+    {"title": "Entry-Level Programmer", "remote": True},
+    {"title": "Python Software Developer", "remote": False},
+    {"title": "Python Software Developer", "remote": True},
 
     # Testing
-    "QA Tester",
-    "Automation Tester",
+    {"title": "QA Tester", "remote": False},
+    {"title": "QA Tester", "remote": True},
+    {"title": "Automation Tester", "remote": False},
+    {"title": "Automation Tester", "remote": True},
 
     # Interns
-    "IT Intern",
-    "Technology Intern",
-    "QA Intern",
-    "Developer Intern"
+    {"title": "IT Intern", "remote": False},
+    {"title": "Technology Intern", "remote": False},
+    {"title": "QA Intern", "remote": False},
+    {"title": "Developer Intern", "remote": False},
 ]
 
-LOCATION = get_env("LOCATION")
-
-l = LOCATION.split(",")
 
 ignore_companies = ['DataAnnotation']
 
@@ -100,7 +105,7 @@ skills_block = "".join(
 )
 
 ai_overview_prompt = f"""
-You are a no-BS IT hiring coach for a person (entry-level IT, {LOCATION}). Analyze this job posting against his skills
+You are a no-BS hiring coach for a person ({LOCATION}). Analyze this job posting against his skills
 PERSON'S INFORMATION:{"".join([f"\n- {i}" for i in PERSON_INFO])}
 EXPERIENCE:{"".join([f"\n- {i}" for i in PERSON_EXPERIENCE])}
 PERSON'S SKILLS:{skills_block}
@@ -111,7 +116,7 @@ OUTPUT EXACTLY THIS JSON (no extra text):
   "seniority_risk": "NONE|LOW|MEDIUM|HIGH",
   "missing_skills": ["0-5 gaps"],
   "matching_skills": ["2-5 Person's strengths that map DIRECTLY to JD needs"],
-  "overview": "1-3 sentences: What job does + Person's daily tasks in simple words."
+  "overview": "1-3 sentences: What job does + person's daily tasks in simple words."
   "fit_score": 0-100,
   "apply": "YES"|"NO",
   "apply_reason": "2 sentences why (yes/no)",

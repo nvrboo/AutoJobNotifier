@@ -7,7 +7,7 @@ import config
 class WebhookSender:
 
     @staticmethod
-    def send_job(webhook_url, url, apply_url, search_title, job_title, company, location, description, attributes, benefits, posted_timestamp, source, ai_data):
+    def send_job(webhook_url, url, apply_url, job_title, company, location, description, attributes, benefits, posted_timestamp, source, ai_data):
         webhook = DiscordWebhook(url=webhook_url)
 
         embed_description = ''
@@ -19,7 +19,6 @@ class WebhookSender:
         # embed_description += f'\n**Benefits:** {", ".join(benefits)}'
         # embed_description += f'\n**Attributes:** {", ".join(attributes)}'
 
-        embed_description += f'\n\n**Search title:** {search_title}'
         embed_description += f'\n**Source:** {source}'
 
         embed_description += f'\n\n*[Apply Url]({apply_url})*'

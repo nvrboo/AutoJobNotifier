@@ -8,48 +8,38 @@ import config
 class JobListingAPI:
 
     @staticmethod
-    def fetch_indeed_jobs_with_hasdata(job_title: str, location: str):
-        headers = {
-            "Content-Type": "application/json",
-            "x-api-key": config.HASDATA_API_KEY
-        }
-        params = {
-            "keyword": job_title,
-            "location": location,
-            "sort": "date",
-            "domain": "www.indeed.com"
-        }
-        try:
-            response = requests.get("https://api.hasdata.com/scrape/indeed/listing", headers=headers, params=params, timeout=10)
-            print(f"Status for {job_title}: {response.status_code}")
-            response.raise_for_status()
-            data = response.json()
-        except requests.RequestException as e:
-            print(f"Request failed for {job_title}: {e}")
-            return []
-        except ValueError:
-            print(f"Invalid JSON for {job_title}")
-            return []
-
-        if 'jobs' in data:
-            return data['jobs']
-        return []
-
-    @staticmethod
-    def fetch_indeed_jobs_with_apify(job_title: str, location: str, max_rows: int, radius: str, from_days: int, level: str = "entry_level"):
+    def fetch_indeed_jobs_with_apify(titles: list, location: str = None, radius: int = None, level: str = "entry_level"):
         client = ApifyClient(config.APIFY_TOKEN)
 
+        urls = []
+        for job_parameters in titles:
+            if job_parameters['search_days_limit'] > 14:
+                job_parameters['search_days_limit'] = 14
+            elif job_parameters['search_days_limit'] > 7:
+                job_parameters['search_days_limit'] = 7
+            elif job_parameters['search_days_limit'] > 3:
+                job_parameters['search_days_limit'] = 3
+            elif job_parameters['search_days_limit'] > 1:
+                job_parameters['search_days_limit'] = 1
+            elif job_parameters['search_days_limit'] < 1:
+                job_parameters['search_days_limit'] = 1
+            remote = job_parameters.get('remote', False)
+            url_level = ''
+            if level == "entry_level":
+                url_level = 'ENTRY_LEVEL'
+            elif level == "mid_level":
+                url_level = 'MID_LEVEL'
+            elif level == "senior_level":
+                url_level = 'SENIOR_LEVEL'
+            url = f'https://www.indeed.com/jobs?q={job_parameters['title'].replace(' ', '+')}&fromage={job_parameters['search_days_limit']}&commuteTime={radius}&sc=0kf%3A{'attr%28DSQF7%29' if remote else ''}explvl%28{url_level}%29%3B'
+            if not remote:
+                url += f'&l={location.replace(',', '%2C').replace(' ', '+')}'
+            urls.append(url)
+
         input = {
-            "country": "us",
-            "query": job_title,
-            "location": location,
-            "maxRows": max_rows,
-            "radius": radius,
-            "level": level,
-            "sort": "relevance",
-            "fromDays": from_days,
             "enableUniqueJobs": True,
-            "urls": []
+            "maxRowsPerUrl": 10,
+            "urls": urls
         }
 
         run = client.actor("borderline/indeed-scraper").call(run_input=input, logger=False)
@@ -77,15 +67,32 @@ class JobListingAPI:
         return formatted_data
 
     @staticmethod
-    def fetch_linkedin_jobs_with_apify(job_title: str, radius: int, days_limit: float):
+    def fetch_linkedin_jobs_with_apify(titles: list, geoid: int = None, radius: int = None, level: str = "entry_level"):
         client = ApifyClient(config.APIFY_TOKEN)
+
+        urls = []
+        for job_parameters in titles:
+            remote = job_parameters.get('remote', False)
+            url_level = ''
+            if level == "entry_level":
+                url_level = 'f_E=2'
+            elif level == "mid_level":
+                url_level = 'f_E=4'
+            elif level == "senior_level":
+                url_level = 'f_E=4'
+            url = f'https://www.linkedin.com/jobs/search/?keywords={job_parameters['title'].replace(" ", "%20")}&f_TPR=r{job_parameters['search_days_limit']*60*60}'
+            if not remote:
+                url += f'&distance={radius}&geoId={geoid}'
+            else:
+                url += f'&f_WT=2'
+            url += f'&{url_level}'
+            print(url)
+            urls.append(url)
 
         input = {
           "count": 100,
           "scrapeCompany": True,
-          "urls": [
-            f"https://www.linkedin.com/jobs/search/?distance={radius}&f_E=2&f_TPR=r{days_limit*24*60*60}&geoId=100414609&keywords={job_title.replace(" ", "%20")}&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true"
-          ]
+          "urls": urls
         }
 
         run = client.actor("curious_coder/linkedin-jobs-scraper").call(run_input=input, logger=False)

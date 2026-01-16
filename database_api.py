@@ -6,13 +6,14 @@ import config
 
 class DatabaseAPI:
 
-    @staticmethod
-    def get_db_connection():
-        return psycopg2.connect(config.DATABASE_URL, cursor_factory=RealDictCursor)
+    def __init__(self, database_url: str):
+        self.database_url = database_url
 
-    @staticmethod
-    def init_db():
-        conn = DatabaseAPI.get_db_connection()
+    def get_db_connection(self):
+        return psycopg2.connect(self.database_url, cursor_factory=RealDictCursor)
+
+    def init_db(self):
+        conn = self.get_db_connection()
         cur = conn.cursor()
         cur.execute(f"""
             CREATE TABLE IF NOT EXISTS jobs (
@@ -23,9 +24,8 @@ class DatabaseAPI:
         cur.close()
         conn.close()
 
-    @staticmethod
-    def ensure_schema():
-        conn = DatabaseAPI.get_db_connection()
+    def ensure_schema(self):
+        conn = self.get_db_connection()
         cur = conn.cursor()
         try:
             cur.execute("""
@@ -43,9 +43,8 @@ class DatabaseAPI:
             cur.close()
             conn.close()
 
-    @staticmethod
-    def job_exists(job_url):
-        conn = DatabaseAPI.get_db_connection()
+    def job_exists(self, job_url):
+        conn = self.get_db_connection()
         cur = conn.cursor()
         cur.execute("SELECT 1 FROM jobs WHERE url = %s", (job_url,))
         result = cur.fetchone()
@@ -53,9 +52,8 @@ class DatabaseAPI:
         conn.close()
         return result is not None
 
-    @staticmethod
-    def get_job_field_value(url, field):
-        conn = DatabaseAPI.get_db_connection()
+    def get_job_field_value(self, url, field):
+        conn = self.get_db_connection()
         cur = conn.cursor(cursor_factory=RealDictCursor)
         cur.execute(f"""
             SELECT {field} FROM jobs WHERE url = %s
@@ -69,7 +67,7 @@ class DatabaseAPI:
 
         value = result[field]  # Direct column access
 
-        if field in ['details', 'attributes', 'original_search_titles'] and value:
+        if field in ['details', 'attributes', 'search_titles'] and value:
             try:
                 return json.loads(value)
             except:
@@ -77,25 +75,23 @@ class DatabaseAPI:
 
         return value
 
-    @staticmethod
-    def add_job(url, apply_url, job_title, original_search_title, company, location, description, attributes, benefits,
+    def add_job(self, url, apply_url, job_title, search_titles, company, location, description, attributes, benefits,
                 posted_time, search_time):
-        conn = DatabaseAPI.get_db_connection()
+        conn = self.get_db_connection()
         cur = conn.cursor()
         cur.execute("""
-            INSERT INTO jobs (url, apply_url, job_title, original_search_titles, company, location, description, attributes, benefits, posted_time, search_time)
+            INSERT INTO jobs (url, apply_url, job_title, search_titles, company, location, description, attributes, benefits, posted_time, search_time)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         """, (
-            url, apply_url, job_title, json.dumps([original_search_title]), company, location, description,
+            url, apply_url, job_title, json.dumps(search_titles), company, location, description,
             json.dumps(attributes), json.dumps(benefits), posted_time, search_time
         ))
         conn.commit()
         cur.close()
         conn.close()
 
-    @staticmethod
-    def is_processed(job_url):
-        conn = DatabaseAPI.get_db_connection()
+    def is_processed(self, job_url):
+        conn = self.get_db_connection()
         cur = conn.cursor()
         cur.execute("SELECT processed FROM jobs WHERE url = %s", (job_url,))
         result = cur.fetchone()
@@ -103,18 +99,16 @@ class DatabaseAPI:
         conn.close()
         return bool(result["processed"]) if result else False
 
-    @staticmethod
-    def mark_processed(job_url):
-        conn = DatabaseAPI.get_db_connection()
+    def mark_processed(self, job_url):
+        conn = self.get_db_connection()
         cur = conn.cursor()
         cur.execute("UPDATE jobs SET processed = TRUE WHERE url = %s", (job_url,))
         conn.commit()
         cur.close()
         conn.close()
 
-    @staticmethod
-    def get_unprocessed_jobs(limit=10):
-        conn = DatabaseAPI.get_db_connection()
+    def get_unprocessed_jobs(self, limit=10):
+        conn = self.get_db_connection()
         cur = conn.cursor(cursor_factory=RealDictCursor)
         cur.execute("""
             SELECT * FROM jobs 
@@ -127,16 +121,15 @@ class DatabaseAPI:
         conn.close()
         return jobs
 
-    @staticmethod
-    def get_last_search_time_by_job_search_title(job_search_title):
-        conn = DatabaseAPI.get_db_connection()
+    def get_last_search_time_by_job_search_title(self, job_search_title):
+        conn = self.get_db_connection()
         cur = conn.cursor()
         try:
             cur.execute(
                 """
                 SELECT search_time
                 FROM jobs
-                WHERE original_search_titles::jsonb ? %s
+                WHERE search_titles::jsonb ? %s
                   AND search_time IS NOT NULL
                 ORDER BY search_time DESC
                 LIMIT 1
@@ -149,24 +142,23 @@ class DatabaseAPI:
             cur.close()
             conn.close()
 
-    @staticmethod
-    def add_search_title(url, job_search_title):
-        conn = DatabaseAPI.get_db_connection()
+    def add_search_title(self, url, search_title):
+        conn = self.get_db_connection()
         cur = conn.cursor()
         try:
             cur.execute(
                 """
                 UPDATE jobs
-                SET original_search_titles =
+                SET search_titles =
                     CASE
-                        WHEN original_search_titles IS NULL THEN jsonb_build_array(%s)::json
-                        WHEN NOT (original_search_titles::jsonb ? %s) THEN
-                            (original_search_titles::jsonb || jsonb_build_array(%s))::json
-                        ELSE original_search_titles
+                        WHEN search_titles IS NULL THEN jsonb_build_array(%s)::json
+                        WHEN NOT (search_titles::jsonb ? %s) THEN
+                            (search_titles::jsonb || jsonb_build_array(%s))::json
+                        ELSE search_titles
                     END
                 WHERE url = %s
                 """,
-                (job_search_title, job_search_title, job_search_title, url),
+                (search_title, search_title, search_title, url),
             )
             conn.commit()
             return cur.rowcount > 0
