@@ -27,10 +27,11 @@ jobs:
           JOBS_WEBHOOK_URL: ${{ secrets.JOBS_WEBHOOK_URL }}
           LOW_SCORE_JOBS_WEBHOOK_URL: ${{ secrets.LOW_SCORE_JOBS_WEBHOOK_URL }}
           APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
-          HASDATA_API_KEY: ${{ secrets.HASDATA_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           PERSON_INFO: ${{ secrets.PERSON_INFO }}
           PERSON_EXPERIENCE: ${{ secrets.PERSON_EXPERIENCE }}
           PERSON_SKILLS: ${{ secrets.PERSON_SKILLS }}
           LOCATION: ${{ secrets.LOCATION }}
+          LINKEDIN_GEOID: ${{ secrets.LINKEDIN_GEOID }}
+          RADIUS: ${{ secrets.RADIUS }}
         run: python main.py
