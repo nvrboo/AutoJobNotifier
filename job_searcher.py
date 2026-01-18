@@ -55,9 +55,7 @@ class JobSearcher:
                     job_parameters['skip'] = True
                     continue
                 else:
-                    self.job_titles[i]['search_days_limit'] = int(
-                        (datetime.datetime.now() - last_search_time).days
-                    )
+                    self.job_titles[i]['search_days_limit'] = round((datetime.datetime.now() - last_search_time).seconds / 60 / 60 / 24)
             print(f"- Search Days Limit for {formatted_search_title} is {self.job_titles[i]['search_days_limit']} days")
 
         self.job_titles = [j for j in self.job_titles if not j.get('skip')]

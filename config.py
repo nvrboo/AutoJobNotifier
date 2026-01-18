@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
 def get_env(key, value_type=None):
     print(f'Loading {key} environment variables')
     value = os.environ.get(key)
@@ -27,24 +28,23 @@ def get_env(key, value_type=None):
     return value
 
 
-
 DATABASE_URL = get_env("DATABASE_URL")
 
 database_fields = [
-            'id SERIAL PRIMARY KEY',
-            'url TEXT',
-            'apply_url TEXT',
-            'job_title TEXT',
-            'search_titles JSON',
-            'company TEXT',
-            'location TEXT',
-            'description TEXT',
-            'attributes JSON',
-            'benefits JSON',
-            'posted_time TIMESTAMP',
-            'search_time TIMESTAMP',
-            'processed BOOLEAN DEFAULT FALSE',
-        ]
+    'id SERIAL PRIMARY KEY',
+    'url TEXT',
+    'apply_url TEXT',
+    'job_title TEXT',
+    'search_titles JSON',
+    'company TEXT',
+    'location TEXT',
+    'description TEXT',
+    'attributes JSON',
+    'benefits JSON',
+    'posted_time TIMESTAMP',
+    'search_time TIMESTAMP',
+    'processed BOOLEAN DEFAULT FALSE',
+]
 
 top_jobs_webhook_url = get_env("TOP_JOBS_WEBHOOK_URL")
 jobs_webhook_url = get_env("JOBS_WEBHOOK_URL")
@@ -57,40 +57,39 @@ LOCATION = get_env("LOCATION")
 LINKEDIN_GEOID = get_env("LINKEDIN_GEOID", int)
 RADIUS = get_env("RADIUS", int)
 
-job_titles = [
+job_titles = {
     # Pure help desk/support
-    {"title": "IT Support Specialist", "remote": False},
-    {"title": "Help Desk Technician", "remote": False},
-    {"title": "Technical Support Specialist", "remote": False},
-    {"title": "IT Assistant", "remote": False},
-    {"title": "Application Support Analyst", "remote": False},
-    {"title": "Desktop Support Technician", "remote": False},
-    {"title": "Network Technician", "remote": False},
-    {"title": "End User Support Technician", "remote": False},
+    'support': [{"title": "IT Support Specialist", "remote": False},
+                {"title": "Help Desk Technician", "remote": False},
+                {"title": "Technical Support Specialist", "remote": False},
+                {"title": "IT Assistant", "remote": False},
+                {"title": "Application Support Analyst", "remote": False},
+                {"title": "Desktop Support Technician", "remote": False},
+                {"title": "Network Technician", "remote": False},
+                {"title": "End User Support Technician", "remote": False}],
 
     # Dev/Programming
-    {"title": "Junior Software Developer", "remote": False},
-    {"title": "Junior Software Developer", "remote": True},
-    {"title": "Junior Web Developer", "remote": False},
-    {"title": "Junior Web Developer", "remote": True},
-    {"title": "Entry-Level Programmer", "remote": False},
-    {"title": "Entry-Level Programmer", "remote": True},
-    {"title": "Python Software Developer", "remote": False},
-    {"title": "Python Software Developer", "remote": True},
+    'dev': [{"title": "Junior Software Developer", "remote": False},
+            {"title": "Junior Software Developer", "remote": True},
+            {"title": "Junior Web Developer", "remote": False},
+            {"title": "Junior Web Developer", "remote": True},
+            {"title": "Entry-Level Programmer", "remote": False},
+            {"title": "Entry-Level Programmer", "remote": True},
+            {"title": "Python Software Developer", "remote": False},
+            {"title": "Python Software Developer", "remote": True}],
 
     # Testing
-    {"title": "QA Tester", "remote": False},
-    {"title": "QA Tester", "remote": True},
-    {"title": "Automation Tester", "remote": False},
-    {"title": "Automation Tester", "remote": True},
+    'testing': [{"title": "QA Tester", "remote": False},
+                {"title": "QA Tester", "remote": True},
+                {"title": "Automation Tester", "remote": False},
+                {"title": "Automation Tester", "remote": True}],
 
     # Interns
-    {"title": "IT Intern", "remote": False},
-    {"title": "Technology Intern", "remote": False},
-    {"title": "QA Intern", "remote": False},
-    {"title": "Developer Intern", "remote": False},
-]
-
+    'internships': [{"title": "IT Intern", "remote": False},
+                    {"title": "Technology Intern", "remote": False},
+                    {"title": "QA Intern", "remote": False},
+                    {"title": "Developer Intern", "remote": False}]
+}
 
 ignore_companies = ['DataAnnotation']
 
