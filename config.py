@@ -76,7 +76,9 @@ job_titles = {
             {"title": "Entry-Level Programmer", "remote": False},
             {"title": "Entry-Level Programmer", "remote": True},
             {"title": "Python Software Developer", "remote": False},
-            {"title": "Python Software Developer", "remote": True}],
+            {"title": "Python Software Developer", "remote": True},
+            {"title": "Python Back-end Developer", "remote": False},
+            {"title": "Python Back-end Developer", "remote": True}],
 
     # Testing
     'testing': [{"title": "QA Tester", "remote": False},
