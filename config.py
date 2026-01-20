@@ -46,16 +46,8 @@ database_fields = [
     'processed BOOLEAN DEFAULT FALSE',
 ]
 
-top_jobs_webhook_url = get_env("TOP_JOBS_WEBHOOK_URL")
-jobs_webhook_url = get_env("JOBS_WEBHOOK_URL")
-low_score_jobs_webhook_url = get_env("LOW_SCORE_JOBS_WEBHOOK_URL")
-
 APIFY_TOKEN = get_env("APIFY_TOKEN")
 OPENAI_API_KEY = get_env("OPENAI_API_KEY")
-
-LOCATION = get_env("LOCATION")
-LINKEDIN_GEOID = get_env("LINKEDIN_GEOID", int)
-RADIUS = get_env("RADIUS", int)
 
 job_titles = {
     # Pure help desk/support
@@ -90,26 +82,21 @@ job_titles = {
     'internships': [{"title": "IT Intern", "remote": False},
                     {"title": "Technology Intern", "remote": False},
                     {"title": "QA Intern", "remote": False},
-                    {"title": "Developer Intern", "remote": False}]
+                    {"title": "Developer Intern", "remote": False}],
+
+    # Care
+    'care': [{"title": "After school teachers aid", "remote": False},
+             {"title": "Daycare worker", "remote": False},
+             {"title": "Animal handler", "remote": False}]
 }
 
 ignore_companies = ['DataAnnotation']
 
-PERSON_INFO = get_env('PERSON_INFO', list)
-PERSON_EXPERIENCE = get_env('PERSON_EXPERIENCE', list)
-PERSON_SKILLS = get_env('PERSON_SKILLS', dict)
-
-skills_block = "".join(
-    f"\n- {category}:" +
-    "".join(f"\n    - {item}" for item in items)
-    for category, items in PERSON_SKILLS.items()
-)
-
-ai_overview_prompt = f"""
-You are a no-BS hiring coach for a person ({LOCATION}). Analyze this job posting against his skills
-PERSON'S INFORMATION:{"".join([f"\n- {i}" for i in PERSON_INFO])}
-EXPERIENCE:{"".join([f"\n- {i}" for i in PERSON_EXPERIENCE])}
-PERSON'S SKILLS:{skills_block}
+ai_overview_prompt = """
+You are a no-BS hiring coach for a person. Analyze this job posting against his skills
+PERSON'S INFORMATION:{info}
+EXPERIENCE:{experience}
+PERSON'S SKILLS:{skills}
 
 OUTPUT EXACTLY THIS JSON (no extra text):
 

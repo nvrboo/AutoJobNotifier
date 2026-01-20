@@ -23,15 +23,22 @@ jobs:
       - name: Run job
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          TOP_JOBS_WEBHOOK_URL: ${{ secrets.TOP_JOBS_WEBHOOK_URL }}
-          JOBS_WEBHOOK_URL: ${{ secrets.JOBS_WEBHOOK_URL }}
-          LOW_SCORE_JOBS_WEBHOOK_URL: ${{ secrets.LOW_SCORE_JOBS_WEBHOOK_URL }}
           APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          PERSON_INFO: ${{ secrets.PERSON_INFO }}
-          PERSON_EXPERIENCE: ${{ secrets.PERSON_EXPERIENCE }}
-          PERSON_SKILLS: ${{ secrets.PERSON_SKILLS }}
+          TOP_JOBS_WEBHOOK_URL_1: ${{ secrets.TOP_JOBS_WEBHOOK_URL }}
+          JOBS_WEBHOOK_URL_1: ${{ secrets.JOBS_WEBHOOK_URL }}
+          LOW_SCORE_JOBS_WEBHOOK_URL_1: ${{ secrets.LOW_SCORE_JOBS_WEBHOOK_URL }}
+          PERSON_INFO_1: ${{ secrets.PERSON_INFO_1 }}
+          PERSON_EXPERIENCE_1: ${{ secrets.PERSON_EXPERIENCE_1 }}
+          PERSON_SKILLS_1: ${{ secrets.PERSON_SKILLS_1 }}
           LOCATION: ${{ secrets.LOCATION }}
           LINKEDIN_GEOID: ${{ secrets.LINKEDIN_GEOID }}
-          RADIUS: ${{ secrets.RADIUS }}
+          RADIUS_1: ${{ secrets.RADIUS_1 }}
+          TOP_JOBS_WEBHOOK_URL_2: ${{ secrets.TOP_JOBS_WEBHOOK_URL }}
+          JOBS_WEBHOOK_URL_2: ${{ secrets.JOBS_WEBHOOK_URL }}
+          LOW_SCORE_JOBS_WEBHOOK_URL_2: ${{ secrets.LOW_SCORE_JOBS_WEBHOOK_URL }}
+          PERSON_INFO_2: ${{ secrets.PERSON_INFO_1 }}
+          PERSON_EXPERIENCE_2: ${{ secrets.PERSON_EXPERIENCE_1 }}
+          PERSON_SKILLS_2: ${{ secrets.PERSON_SKILLS_1 }}
+          RADIUS_2: ${{ secrets.RADIUS_1 }}
         run: python main.py

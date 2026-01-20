@@ -61,7 +61,7 @@ class JobSearcher:
         self.job_titles = [j for j in self.job_titles if not j.get('skip')]
         if "indeed" in listings:
             print(f'- Using Indeed Search for {len(self.job_titles)} titles')
-            indeed_jobs = JobListingAPI.fetch_indeed_jobs_with_apify(self.job_titles, config.LOCATION, config.RADIUS)
+            indeed_jobs = JobListingAPI.fetch_indeed_jobs_with_apify(self.job_titles, self.location, self.radius)
             jobs += indeed_jobs
             print(f'- Found {len(indeed_jobs)} jobs using Indeed')
         if 'linkedin' in listings:
@@ -113,7 +113,10 @@ class JobSearcher:
         ai_overview = AITool.make_overview(job['title'],
                                            job['description'],
                                            job['company'],
-                                           job['location'])
+                                           job['location'],
+                                           self.person_info,
+                                           self.person_experience,
+                                           self.person_skills)
 
         webhook_url = self.average_jobs_webhook
 
