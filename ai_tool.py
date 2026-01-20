@@ -1,6 +1,7 @@
 import json
 
 from openai import OpenAI
+from openai.types.shared_params import Reasoning
 
 import config
 
@@ -26,6 +27,7 @@ class AITool:
                     model="gpt-5.1",
                     prompt_cache_retention="24h",
                     # temperature=0,
+                    reasoning={"effort": "medium"},
                     input=[
                         {
                             "role": "system",
