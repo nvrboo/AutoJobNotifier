@@ -34,11 +34,11 @@ jobs:
           LOCATION: ${{ secrets.LOCATION }}
           LINKEDIN_GEOID: ${{ secrets.LINKEDIN_GEOID }}
           RADIUS_1: ${{ secrets.RADIUS_1 }}
-          TOP_JOBS_WEBHOOK_URL_2: ${{ secrets.TOP_JOBS_WEBHOOK_URL }}
-          JOBS_WEBHOOK_URL_2: ${{ secrets.JOBS_WEBHOOK_URL }}
-          LOW_SCORE_JOBS_WEBHOOK_URL_2: ${{ secrets.LOW_SCORE_JOBS_WEBHOOK_URL }}
-          PERSON_INFO_2: ${{ secrets.PERSON_INFO_1 }}
-          PERSON_EXPERIENCE_2: ${{ secrets.PERSON_EXPERIENCE_1 }}
-          PERSON_SKILLS_2: ${{ secrets.PERSON_SKILLS_1 }}
-          RADIUS_2: ${{ secrets.RADIUS_1 }}
+          TOP_JOBS_WEBHOOK_URL_2: ${{ secrets.TOP_JOBS_WEBHOOK_URL_2 }}
+          JOBS_WEBHOOK_URL_2: ${{ secrets.JOBS_WEBHOOK_URL_2 }}
+          LOW_SCORE_JOBS_WEBHOOK_URL_2: ${{ secrets.LOW_SCORE_JOBS_WEBHOOK_URL_2 }}
+          PERSON_INFO_2: ${{ secrets.PERSON_INFO_2 }}
+          PERSON_EXPERIENCE_2: ${{ secrets.PERSON_EXPERIENCE_2 }}
+          PERSON_SKILLS_2: ${{ secrets.PERSON_SKILLS_2 }}
+          RADIUS_2: ${{ secrets.RADIUS_2 }}
         run: python main.py
