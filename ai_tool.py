@@ -1,4 +1,5 @@
 import json
+from functools import lru_cache
 
 from openai import OpenAI
 from openai.types.shared_params import Reasoning
@@ -14,15 +15,6 @@ class AITool:
     def make_overview(title, description, company, location, person_info, person_experience, person_skills, retries: int = 3):
         for _ in range(retries):
             try:
-                prompt = config.ai_overview_prompt
-                info = {"".join([f"\n- {i}" for i in person_info])}
-                experience = {"".join([f"\n- {i}" for i in person_experience])}
-                skills = "".join(
-                    f"\n- {category}:" +
-                    "".join(f"\n    - {item}" for item in items)
-                    for category, items in person_skills.items()
-                )
-                prompt.format(info=info, experience=experience, skills=skills)
                 response = client.responses.create(
                     model="gpt-5.1",
                     prompt_cache_retention="24h",
@@ -31,7 +23,7 @@ class AITool:
                     input=[
                         {
                             "role": "system",
-                            "content": prompt
+                            "content": AITool.generate_prompt(person_info, person_experience, person_skills)
                         },
                         {
                             "role": "user",
@@ -46,3 +38,16 @@ class AITool:
             except Exception as e:
                 print(e)
         return None
+
+    @staticmethod
+    @lru_cache(maxsize=1024)
+    def generate_prompt(person_info, person_experience, person_skills):
+        prompt = config.ai_overview_prompt
+        info = {"".join([f"\n- {i}" for i in person_info])}
+        experience = {"".join([f"\n- {i}" for i in person_experience])}
+        skills = "".join(
+            f"\n- {category}:" +
+            "".join(f"\n    - {item}" for item in items)
+            for category, items in person_skills.items()
+        )
+        prompt.format(info=info, experience=experience, skills=skills)
