@@ -51,3 +51,4 @@ class AITool:
             for category, items in person_skills.items()
         )
         prompt.format(info=info, experience=experience, skills=skills)
+        return prompt
