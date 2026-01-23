@@ -6,13 +6,14 @@ from openai.types.shared_params import Reasoning
 
 import config
 
-
 client = OpenAI(api_key=config.OPENAI_API_KEY)
+
 
 class AITool:
 
     @staticmethod
-    def make_overview(title, description, company, location, person_info, person_experience, person_skills, retries: int = 3):
+    def make_overview(title, description, company, location, person_info, person_experience, person_skills,
+                      retries: int = 3):
         for _ in range(retries):
             try:
                 response = client.responses.create(
@@ -23,7 +24,7 @@ class AITool:
                     input=[
                         {
                             "role": "system",
-                            "content": AITool.generate_prompt(person_info, person_experience, person_skills)
+                            "content": AITool.generate_prompt(person_info, person_experience, person_skills),
                         },
                         {
                             "role": "user",
@@ -36,11 +37,11 @@ class AITool:
                 )
                 return json.loads(response.output_text)
             except Exception as e:
+                raise e
                 print(e)
         return None
 
     @staticmethod
-    @lru_cache(maxsize=1024)
     def generate_prompt(person_info, person_experience, person_skills):
         prompt = config.ai_overview_prompt
         info = {"".join([f"\n- {i}" for i in person_info])}
@@ -50,5 +51,5 @@ class AITool:
             "".join(f"\n    - {item}" for item in items)
             for category, items in person_skills.items()
         )
-        prompt.format(info=info, experience=experience, skills=skills)
+        prompt = prompt.format(info=info, experience=experience, skills=skills)
         return prompt
