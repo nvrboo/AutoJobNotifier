@@ -9,6 +9,7 @@ if __name__ == '__main__':
                            config.get_env('PERSON_INFO_1', list), config.get_env('PERSON_EXPERIENCE_1', list), config.get_env('PERSON_SKILLS_1', dict),
                            config.get_env('LOCATION'), config.get_env('LINKEDIN_GEOID'), config.get_env('RADIUS_1'),
                            config.ignore_companies)
-    searcher.job_titles = config.job_titles['support'] + config.job_titles['dev'] + config.job_titles['testing'] + config.job_titles['internships']
-    # searcher.job_titles = config.job_titles['testing'][0:2]
+    searcher.job_titles = config.job_titles['support'] + config.job_titles['coding_tutor'] + config.job_titles['dev'] + config.job_titles['testing'] + config.job_titles['internships']
     searcher.search(['indeed'])
+    searcher.job_titles = config.job_titles['coding_tutor'] + config.job_titles['dev'] + config.job_titles['testing'] + config.job_titles['internships']
+    searcher.search(['linkedin'])

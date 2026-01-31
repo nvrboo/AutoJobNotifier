@@ -60,6 +60,10 @@ job_titles = {
                 {"title": "Network Technician", "remote": False},
                 {"title": "End User Support Technician", "remote": False}],
 
+    # Coding Tutor
+    'coding_tutor': [{"title": "Coding Tutor", "remote": False},
+                     {"title": "Coding Tutor", "remote": True},],
+
     # Dev/Programming
     'dev': [{"title": "Junior Software Developer", "remote": False},
             {"title": "Junior Software Developer", "remote": True},
@@ -82,12 +86,7 @@ job_titles = {
     'internships': [{"title": "IT Intern", "remote": False},
                     {"title": "Technology Intern", "remote": False},
                     {"title": "QA Intern", "remote": False},
-                    {"title": "Developer Intern", "remote": False}],
-
-    # Care
-    'care': [{"title": "After school teachers aid", "remote": False},
-             {"title": "Daycare worker", "remote": False},
-             {"title": "Animal handler", "remote": False}]
+                    {"title": "Developer Intern", "remote": False}]
 }
 
 ignore_companies = ['DataAnnotation']
