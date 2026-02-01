@@ -44,7 +44,7 @@ class JobSearcher:
             search_title = job_parameters['title']
             is_remote = job_parameters.get('remote', False)
             formatted_search_title = f'{search_title}{" Remote" if is_remote else ""}'
-            db_search_title = f'{formatted_search_title} {self.search_id}'
+            db_search_title = f'{formatted_search_title} {self.search_id} ({", ".join(listings)})'
             self.job_titles[i]['formatted_search_title'] = formatted_search_title
             self.job_titles[i]['db_search_title'] = db_search_title
             last_search_time = self.database_api.get_last_search_time_by_job_search_title(db_search_title)
