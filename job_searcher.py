@@ -61,6 +61,9 @@ class JobSearcher:
             print(f"- Search Days Limit for {formatted_search_title} is {self.job_titles[i]['search_days_limit']} days")
 
         self.job_titles = [j for j in self.job_titles if not j.get('skip')]
+        if not self.job_titles:
+            print(f"- Search is cancelled because there are no job titles")
+            return
         if "indeed" in listings:
             print(f'- Using Indeed Search for {len(self.job_titles)} titles')
             indeed_jobs = JobListingAPI.fetch_indeed_jobs_with_apify(self.job_titles, self.location, self.radius)

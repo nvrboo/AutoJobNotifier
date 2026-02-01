@@ -70,12 +70,13 @@ class JobListingAPI:
     def fetch_linkedin_jobs_with_apify(titles: list, geoid: int = None, radius: int = None, level: str = "entry_level"):
         client = ApifyClient(config.APIFY_TOKEN)
 
-        if titles[0]['search_days_limit'] <= 3:
-            posted_limit = '24h'
-        elif titles[0]['search_days_limit'] <= 14:
-            posted_limit = 'week'
-        else:
-            posted_limit = 'month'
+        if titles:
+            if titles[0]['search_days_limit'] <= 3:
+                posted_limit = '24h'
+            elif titles[0]['search_days_limit'] <= 14:
+                posted_limit = 'week'
+            else:
+                posted_limit = 'month'
 
         experience_level = ''
         if level == "entry_level":
