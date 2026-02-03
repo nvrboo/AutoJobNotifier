@@ -105,8 +105,8 @@ OUTPUT EXACTLY THIS JSON (no extra text):
 
 {{
   "seniority_risk": "NONE|LOW|MEDIUM|HIGH",
-  "missing_skills": ["0-5 gaps"],
-  "matching_skills": ["2-5 Person's strengths that map DIRECTLY to JD needs"],
+  "missing_skills": ["0-5 gaps. most important ones go first"],
+  "matching_skills": ["2-5 Person's strengths that map DIRECTLY to the listed requirements"],
   "overview": "1-3 sentences: What job does + person's daily tasks in simple words."
   "fit_score": 0-100,
   "apply": "YES"|"NO",
