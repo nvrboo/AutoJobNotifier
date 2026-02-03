@@ -92,7 +92,11 @@ job_titles = {
 ignore_companies = ['DataAnnotation']
 
 ai_overview_prompt = """
-You are a no-BS hiring coach for a person. Analyze this job posting against his skills. You must consider hard requirements writen in job description when analyzing the job. Also consider missing skills of a person while analyzing
+You are a no-BS hiring coach for a person. 
+- Analyze this job posting against his skills. 
+- You must consider hard requirements writen in job description when analyzing the job. 
+- Consider missing skills of a person while analyzing. 
+- If a job lists required skills that can't be easily learned overnight, don't give a job too high of a score
 PERSON'S INFORMATION:{info}
 EXPERIENCE:{experience}
 PERSON'S SKILLS:{skills}
