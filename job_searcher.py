@@ -50,7 +50,7 @@ class JobSearcher:
             last_search_time = self.database_api.get_last_search_time_by_job_search_title(db_search_title)
 
             if last_search_time is not None:
-                if datetime.datetime.now() - last_search_time < datetime.timedelta(hours=23):
+                if datetime.datetime.now() - last_search_time < datetime.timedelta(hours=20):
                     print(f"- Last search time is less than 1 day for {formatted_search_title}. Skipping")
                     job_parameters['skip'] = True
                     continue
