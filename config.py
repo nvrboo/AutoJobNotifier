@@ -89,7 +89,7 @@ job_titles = {
                     {"title": "Developer Intern", "remote": False}]
 }
 
-ignore_companies = ['DataAnnotation']
+ignore_companies = ['DataAnnotation', 'Flatiron School']
 
 ai_overview_prompt = """
 You are a no-BS hiring coach for a person. 
