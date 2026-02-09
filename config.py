@@ -30,6 +30,11 @@ def get_env(key, value_type=None):
 
 DATABASE_URL = get_env("DATABASE_URL")
 
+APIFY_TOKEN = get_env("APIFY_TOKEN")
+OPENAI_API_KEY = get_env("OPENAI_API_KEY")
+
+top_job_min_ai_score = 80
+
 database_fields = [
     'id SERIAL PRIMARY KEY',
     'url TEXT',
@@ -45,9 +50,6 @@ database_fields = [
     'search_time TIMESTAMP',
     'processed BOOLEAN DEFAULT FALSE',
 ]
-
-APIFY_TOKEN = get_env("APIFY_TOKEN")
-OPENAI_API_KEY = get_env("OPENAI_API_KEY")
 
 job_titles = {
     # Pure help desk/support

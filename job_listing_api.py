@@ -50,6 +50,7 @@ class JobListingAPI:
         formatted_data = []
 
         for job in data:
+            print(job)
             job_data = {
                 'url': job['jobUrl'],
                 'apply_url': job.get('applyUrl', job['jobUrl']),
@@ -60,8 +61,11 @@ class JobListingAPI:
                 'attributes': job.get('attributes', []),
                 'benefits': job.get('benefits'),
                 'posted_time': datetime.datetime.strptime(job.get('datePublished'), "%Y-%m-%d"),
+                'remote': job.get('isRemote'),
+                'easy_apply': job.get('applyUrl').startswith('http://www.indeed.com'),
                 'source': 'indeed'
             }
+            print(job_data)
             formatted_data.append(job_data)
 
         return formatted_data
@@ -112,6 +116,7 @@ class JobListingAPI:
         formatted_data = []
 
         for job in data:
+            print(job)
             job_data = {
                 'url': job['linkedinUrl'],
                 'apply_url': job.get('applyMethod', {}).get('companyApplyUrl'),
@@ -123,8 +128,11 @@ class JobListingAPI:
                 'benefits': job.get('benefits'),
                 'posted_time': datetime.datetime.strptime(job.get('postedDate'), "%Y-%m-%dT%H:%M:%S.%fZ"),
                 'applicants': job.get('applicants'),
+                'remote': job.get('workplaceType') == 'remote',
+                'easy_apply': job.get('easyApplyUrl') is not None,
                 'source': 'linkedin'
             }
+            print(job_data)
             formatted_data.append(job_data)
 
         return formatted_data

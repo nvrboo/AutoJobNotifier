@@ -33,6 +33,9 @@ jobs:
           PERSON_SKILLS_1: ${{ secrets.PERSON_SKILLS_1 }}
           LOCATION: ${{ secrets.LOCATION }}
           LINKEDIN_GEOID: ${{ secrets.LINKEDIN_GEOID }}
+          TOP_JOB_ROLE_ID: ${{ secrets.TOP_JOB_ROLE_ID }}
+          GOOD_JOB_ROLE_ID: ${{ secrets.GOOD_JOB_ROLE_ID }}
+          EASY_APPLY_ROLE_ID: ${{ secrets.EASY_APPLY_ROLE_ID }}
           RADIUS_1: ${{ secrets.RADIUS_1 }}
           TOP_JOBS_WEBHOOK_URL_2: ${{ secrets.TOP_JOBS_WEBHOOK_URL_2 }}
           JOBS_WEBHOOK_URL_2: ${{ secrets.JOBS_WEBHOOK_URL_2 }}

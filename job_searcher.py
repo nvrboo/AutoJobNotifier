@@ -14,7 +14,8 @@ class JobSearcher:
                  job_titles: list, search_id: int,
                  person_info: list, person_experience: list, person_skills: dict,
                  location: str = None, linkedin_geoid: str = None, radius: int = None,
-                 ignore_companies: list = None):
+                 ignore_companies: list = None,
+                 top_job_role_id: int = None, good_job_role_id: int = None, easy_apply_role_id: int = None,):
         self.apify_token = apify_token
         self.open_ai_token = open_ai_token
         self.database_url = database_url
@@ -30,6 +31,9 @@ class JobSearcher:
         self.location = location
         self.linkedin_geoid = linkedin_geoid
         self.ignore_companies = ignore_companies
+        self.top_job_role_id = top_job_role_id
+        self.good_job_role_id = good_job_role_id
+        self.easy_apply_role_id = easy_apply_role_id
         if ignore_companies is None:
             self.ignore_companies = []
         self.database_api = DatabaseAPI(self.database_url)
@@ -87,9 +91,9 @@ class JobSearcher:
         for job in jobs:
             job_url = job['url']
 
-            if self.database_api.is_processed(job_url):
-                print(f'- Job is already processed: {job['title']}')
-                continue
+            # if self.database_api.is_processed(job_url):
+            #     print(f'- Job is already processed: {job['title']}')
+            #     continue
 
             if job['company'] in self.ignore_companies:
                 print(f'- Ignoring by company: {job['title']}')
@@ -125,7 +129,7 @@ class JobSearcher:
 
         webhook_url = self.average_jobs_webhook
 
-        if ai_overview['fit_score'] >= 80:
+        if ai_overview['fit_score'] >= config.top_job_min_ai_score:
             webhook_url = self.top_jobs_webhook
 
         if ai_overview['apply'] == 'NO':
@@ -133,7 +137,7 @@ class JobSearcher:
 
         WebhookSender.send_job(webhook_url,
                                job['url'],
-                               job['apply_url'],
+                               job['remote'],
                                job['title'],
                                job['company'],
                                job['location'],
@@ -141,7 +145,11 @@ class JobSearcher:
                                job['attributes'],
                                job['benefits'],
                                job['posted_time'].timestamp(),
+                               job['easy_apply'],
                                job['source'],
+                               self.top_job_role_id,
+                               self.good_job_role_id,
+                               self.easy_apply_role_id,
                                ai_overview
                                )
 
