@@ -13,9 +13,6 @@ class WebhookSender:
 
         content = ''
 
-        if ai_overview['fit_score'] >= config.top_job_min_ai_score:
-            content += f'<@&{top_job_role_id}>'
-
         if ai_overview['apply'] == 'YES':
             if ai_overview['fit_score'] >= config.top_job_min_ai_score:
                 content += f'<@&{top_job_role_id}>'

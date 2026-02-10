@@ -62,7 +62,7 @@ class JobListingAPI:
                 'benefits': job.get('benefits'),
                 'posted_time': datetime.datetime.strptime(job.get('datePublished'), "%Y-%m-%d"),
                 'remote': job.get('isRemote'),
-                'easy_apply': job.get('applyUrl').startswith('http://www.indeed.com'),
+                'easy_apply': job.get('applyUrl', '').startswith('http://www.indeed.com'),
                 'source': 'indeed'
             }
             print(job_data)

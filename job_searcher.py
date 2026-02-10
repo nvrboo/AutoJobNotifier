@@ -91,9 +91,9 @@ class JobSearcher:
         for job in jobs:
             job_url = job['url']
 
-            # if self.database_api.is_processed(job_url):
-            #     print(f'- Job is already processed: {job['title']}')
-            #     continue
+            if self.database_api.is_processed(job_url):
+                print(f'- Job is already processed: {job['title']}')
+                continue
 
             if job['company'] in self.ignore_companies:
                 print(f'- Ignoring by company: {job['title']}')
