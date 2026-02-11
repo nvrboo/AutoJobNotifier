@@ -91,7 +91,7 @@ job_titles = {
                     {"title": "Developer Intern", "remote": False}]
 }
 
-ignore_companies = ['DataAnnotation', 'Flatiron School', 'Lensa']
+IGNORE_COMPANIES = get_env('IGNORE_COMPANIES', list)
 
 ai_overview_prompt = """
 You are a no-BS hiring coach for a person. 

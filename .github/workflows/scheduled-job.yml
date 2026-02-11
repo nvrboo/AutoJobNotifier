@@ -25,23 +25,17 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          TOP_JOBS_WEBHOOK_URL_1: ${{ secrets.TOP_JOBS_WEBHOOK_URL }}
-          JOBS_WEBHOOK_URL_1: ${{ secrets.JOBS_WEBHOOK_URL }}
-          LOW_SCORE_JOBS_WEBHOOK_URL_1: ${{ secrets.LOW_SCORE_JOBS_WEBHOOK_URL }}
-          PERSON_INFO_1: ${{ secrets.PERSON_INFO_1 }}
-          PERSON_EXPERIENCE_1: ${{ secrets.PERSON_EXPERIENCE_1 }}
-          PERSON_SKILLS_1: ${{ secrets.PERSON_SKILLS_1 }}
+          TOP_JOBS_WEBHOOK_URL: ${{ secrets.TOP_JOBS_WEBHOOK_URL }}
+          JOBS_WEBHOOK_URL: ${{ secrets.JOBS_WEBHOOK_URL }}
+          LOW_SCORE_JOBS_WEBHOOK_URL: ${{ secrets.LOW_SCORE_JOBS_WEBHOOK_URL }}
+          PERSON_INFO: ${{ secrets.PERSON_INFO }}
+          PERSON_EXPERIENCE: ${{ secrets.PERSON_EXPERIENCE }}
+          PERSON_SKILLS: ${{ secrets.PERSON_SKILLS }}
           LOCATION: ${{ secrets.LOCATION }}
           LINKEDIN_GEOID: ${{ secrets.LINKEDIN_GEOID }}
           TOP_JOB_ROLE_ID: ${{ secrets.TOP_JOB_ROLE_ID }}
           GOOD_JOB_ROLE_ID: ${{ secrets.GOOD_JOB_ROLE_ID }}
           EASY_APPLY_ROLE_ID: ${{ secrets.EASY_APPLY_ROLE_ID }}
-          RADIUS_1: ${{ secrets.RADIUS_1 }}
-          TOP_JOBS_WEBHOOK_URL_2: ${{ secrets.TOP_JOBS_WEBHOOK_URL_2 }}
-          JOBS_WEBHOOK_URL_2: ${{ secrets.JOBS_WEBHOOK_URL_2 }}
-          LOW_SCORE_JOBS_WEBHOOK_URL_2: ${{ secrets.LOW_SCORE_JOBS_WEBHOOK_URL_2 }}
-          PERSON_INFO_2: ${{ secrets.PERSON_INFO_2 }}
-          PERSON_EXPERIENCE_2: ${{ secrets.PERSON_EXPERIENCE_2 }}
-          PERSON_SKILLS_2: ${{ secrets.PERSON_SKILLS_2 }}
-          RADIUS_2: ${{ secrets.RADIUS_2 }}
+          IGNORE_COMPANIES: ${{ secrets.IGNORE_COMPANIES }}
+          RADIUS: ${{ secrets.RADIUS }}
         run: python main.py
