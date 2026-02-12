@@ -7,7 +7,7 @@ import config
 class WebhookSender:
 
     @staticmethod
-    def send_job(webhook_url, url, is_remote, job_title, company, location, description, attributes, benefits, posted_timestamp, easy_apply, source,
+    def send_job(webhook_url, url, is_remote, job_title, company, location, description, attributes, benefits, posted_timestamp, easy_apply, apply_url, source,
                  top_job_role_id, good_job_role_id, easy_apply_role_id,
                  ai_overview):
 
@@ -30,7 +30,9 @@ class WebhookSender:
         embed_description += f'\n**Location:** {location if location is not None else ''}{f" Remote" if is_remote else ''}'
         embed_description += f'\n**Posted Date:** <t:{round(posted_timestamp)}:R>'
 
-        embed_description += f'\n**Source:** {source}'
+        embed_description += f'\n\n**Apply URL:** [Click]({apply_url})' if apply_url is not None else ''
+
+        embed_description += f'\n\n**Source:** {source}'
 
         main_embed = DiscordEmbed(title=job_title,
                              description=embed_description,

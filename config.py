@@ -53,13 +53,11 @@ database_fields = [
 
 job_titles = {
     # Pure help desk/support
-    'support': [{"title": "IT Support Specialist", "remote": False},
+    'support': [
                 {"title": "Help Desk Technician", "remote": False},
                 {"title": "Technical Support Specialist", "remote": False},
                 {"title": "IT Assistant", "remote": False},
                 {"title": "Application Support Analyst", "remote": False},
-                {"title": "Desktop Support Technician", "remote": False},
-                {"title": "Network Technician", "remote": False},
                 {"title": "End User Support Technician", "remote": False}],
 
     # Coding Tutor
@@ -68,21 +66,23 @@ job_titles = {
 
     # Dev/Programming
     'dev': [{"title": "Junior Software Developer", "remote": False},
-            {"title": "Junior Software Developer", "remote": True},
+            # {"title": "Junior Software Developer", "remote": True},
             {"title": "Junior Web Developer", "remote": False},
-            {"title": "Junior Web Developer", "remote": True},
+            # {"title": "Junior Web Developer", "remote": True},
             {"title": "Entry-Level Programmer", "remote": False},
-            {"title": "Entry-Level Programmer", "remote": True},
+            # {"title": "Entry-Level Programmer", "remote": True},
             {"title": "Python Software Developer", "remote": False},
-            {"title": "Python Software Developer", "remote": True},
+            # {"title": "Python Software Developer", "remote": True},
             {"title": "Python Back-end Developer", "remote": False},
-            {"title": "Python Back-end Developer", "remote": True}],
+            # {"title": "Python Back-end Developer", "remote": True}
+            ],
 
     # Testing
     'testing': [{"title": "QA Tester", "remote": False},
-                {"title": "QA Tester", "remote": True},
+                # {"title": "QA Tester", "remote": True},
                 {"title": "Automation Tester", "remote": False},
-                {"title": "Automation Tester", "remote": True}],
+                # {"title": "Automation Tester", "remote": True}
+                ],
 
     # Interns
     'internships': [{"title": "IT Intern", "remote": False},

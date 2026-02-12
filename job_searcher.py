@@ -146,6 +146,7 @@ class JobSearcher:
                                job['benefits'],
                                job['posted_time'].timestamp(),
                                job['easy_apply'],
+                               job['apply_url'],
                                job['source'],
                                self.top_job_role_id,
                                self.good_job_role_id,
