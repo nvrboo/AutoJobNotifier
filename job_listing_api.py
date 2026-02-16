@@ -101,7 +101,7 @@ class JobListingAPI:
         }
 
         input['jobTitles'] = [i['title'] for i in titles if not i.get('remote')]
-        input['workplaceType'] = ["on_site"]
+        input['workplaceType'] = ["hybrid", "office"]
         run = client.actor("harvestapi/linkedin-job-search").call(run_input=input, logger=False)
 
         dataset_id = run["defaultDatasetId"]
