@@ -93,7 +93,6 @@ class JobListingAPI:
             # "under10Applicants": True,
             "experienceLevel": [experience_level],
             "geoIds": [str(geoid)],
-            "jobTitles": [],
             "maxItems": 5,
             "postedLimit": posted_limit,
             "sortBy": "date",

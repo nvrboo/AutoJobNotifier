@@ -55,6 +55,7 @@ job_titles = {
     # Pure help desk/support
     'support': [
                 {"title": "Help Desk Technician", "remote": False},
+                {"title": "Help Desk Technician", "remote": True},
                 {"title": "Technical Support Specialist", "remote": False},
                 {"title": "IT Assistant", "remote": False},
                 {"title": "Application Support Analyst", "remote": False},
@@ -66,15 +67,11 @@ job_titles = {
 
     # Dev/Programming
     'dev': [{"title": "Junior Software Developer", "remote": False},
-            # {"title": "Junior Software Developer", "remote": True},
             {"title": "Junior Web Developer", "remote": False},
-            # {"title": "Junior Web Developer", "remote": True},
-            {"title": "Entry-Level Programmer", "remote": False},
-            # {"title": "Entry-Level Programmer", "remote": True},
             {"title": "Python Software Developer", "remote": False},
-            # {"title": "Python Software Developer", "remote": True},
             {"title": "Python Back-end Developer", "remote": False},
-            # {"title": "Python Back-end Developer", "remote": True}
+            {"title": "Developer", "remote": False},
+            {"title": "Programmer", "remote": False},
             ],
 
     # Testing
