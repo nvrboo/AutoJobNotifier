@@ -55,7 +55,7 @@ job_titles = {
     # Pure help desk/support
     'support': [
                 {"title": "Help Desk Technician", "remote": False},
-                {"title": "Help Desk Technician", "remote": True},
+                # {"title": "Help Desk Technician", "remote": True},
                 {"title": "Technical Support Specialist", "remote": False},
                 {"title": "IT Assistant", "remote": False},
                 {"title": "Application Support Analyst", "remote": False},
