@@ -62,8 +62,7 @@ job_titles = {
                 {"title": "End User Support Technician", "remote": False}],
 
     # Coding Tutor
-    'coding_tutor': [{"title": "Coding Tutor", "remote": False},
-                     {"title": "Coding Tutor", "remote": True},],
+    'coding_tutor': [{"title": "Coding Tutor", "remote": False}],
 
     # Dev/Programming
     'dev': [{"title": "Junior Software Developer", "remote": False},
